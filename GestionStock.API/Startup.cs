@@ -1,7 +1,9 @@
+using GestionStock.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +34,11 @@ namespace GestionStock.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestionStock.API", Version = "v1" });
             });
+            //SQL Server configuration
+            services.AddDbContext<GestionStockContext>
+                (options => options.UseSqlServer(
+                      Configuration.GetConnectionString("Default"), x => x.MigrationsAssembly("GestionStock.Infrastructure")
+                ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
