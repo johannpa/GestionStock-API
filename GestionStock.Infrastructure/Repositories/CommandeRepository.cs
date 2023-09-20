@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GestionStock.Infrastructure.Repositories
 {
-    public class ProduitRepository:Repository<Produit>
+    public class CommandeRepository:Repository<Commande>
     {
-        public ProduitRepository(GestionStockContext context):base(context)
+        public CommandeRepository(GestionStockContext context):base(context)
         {
 
         }
