@@ -15,5 +15,6 @@ namespace GestionStock.Domain.Interface
         T Get(int id);
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         void SaveChanges();
+        void Delete(T entity);
     }
 }

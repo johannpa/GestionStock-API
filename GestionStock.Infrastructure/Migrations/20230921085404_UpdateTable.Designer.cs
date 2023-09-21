@@ -4,14 +4,16 @@ using GestionStock.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestionStock.Infrastructure.Migrations
 {
     [DbContext(typeof(GestionStockContext))]
-    partial class GestionStockContextModelSnapshot : ModelSnapshot
+    [Migration("20230921085404_UpdateTable")]
+    partial class UpdateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -30,6 +30,11 @@ namespace GestionStock.Infrastructure.Repositories
                 .ToList();
         }
 
+        public void Delete(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+        }
+
         public IEnumerable<T> Find(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>()
