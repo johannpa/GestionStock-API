@@ -14,5 +14,6 @@ namespace GestionStock.Domain.Services
         Commande CreateCommande(Commande commande);
         Commande UpdateCommande(ICommandeService commande);
         void DeleteCommande(Commande commande);
+        void CreateCommandeAvecClient(Client client, Commande commande, List<LignesCommande> listLigneCommande);
     }
 }

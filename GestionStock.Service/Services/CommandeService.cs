@@ -11,15 +11,41 @@ namespace GestionStock.Service.Services
 {
     public class CommandeService : ICommandeService
     {
-        private readonly IRepository<Commande> _repository;
+        private readonly IRepository<Commande> _repositoryCommande;
+        private readonly IRepository<Client> _repositoryClient;
+        private readonly IRepository<LignesCommande> _repositoryLigneCommande;
 
-        public CommandeService(IRepository<Commande> repository)
+        public CommandeService(IRepository<Commande> repository, 
+            IRepository<Client> repositoryClient, 
+            IRepository<LignesCommande> repositoryLigneCommande)
         {
-            _repository = repository;
+            _repositoryCommande = repository;
+            _repositoryClient = repositoryClient;
+            _repositoryLigneCommande = repositoryLigneCommande;
         }
         public Commande CreateCommande(Commande commande)
         {
             throw new NotImplementedException();
+        }
+
+        public void CreateCommandeAvecClient(Client client, Commande commande, List<LignesCommande> listLigneCommande)
+        {
+            // Create the client
+            var clientCreated = _repositoryClient.Add(client);
+            _repositoryClient.SaveChanges();
+
+            // Create command
+            commande.Client = clientCreated;
+            var CommandeCreated = _repositoryCommande.Add(commande);
+            _repositoryCommande.SaveChanges();
+
+            // Creat lignes of command
+            foreach(var ligne in listLigneCommande)
+            {
+                ligne.Commande = CommandeCreated;
+                _repositoryLigneCommande.Add(ligne);
+                _repositoryLigneCommande.SaveChanges();
+            }
         }
 
         public void DeleteCommande(Commande commande)
