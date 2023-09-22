@@ -9,20 +9,20 @@ namespace GestionStock.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T:class
     {
-        private readonly GestionStockContext _context;
+        protected readonly GestionStockContext _context;
 
         public Repository(GestionStockContext context)
         {
             _context = context;
         }
-        public T Add(T entity)
+        public virtual T Add(T entity)
         {
            return _context
                 .Add(entity)
                 .Entity;
         }
 
-        public IEnumerable<T> All()
+        public virtual IEnumerable<T> All()
         {
             return _context
                 .Set<T>()
@@ -30,29 +30,29 @@ namespace GestionStock.Infrastructure.Repositories
                 .ToList();
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
 
-        public IEnumerable<T> Find(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public virtual IEnumerable<T> Find(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>()
                 .AsQueryable()
                 .Where(predicate).ToList();
         }
 
-        public T Get(int id)
+        public virtual T Get(int id)
         {
             return _context.Find<T>(id);
         }
 
-        public void SaveChanges()
+        public virtual void SaveChanges()
         {
             _context.SaveChanges();
         }
 
-        public T Update(T entity)
+        public virtual T Update(T entity)
         {
             return _context.Update(entity).Entity;
         }

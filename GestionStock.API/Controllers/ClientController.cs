@@ -54,5 +54,21 @@ namespace GestionStock.API.Controllers
             return Ok(client);
         }
 
+        [HttpPost("UpdateClient")]
+        public ActionResult<Client> updateClient(Client client)
+        {
+            try
+            {
+                var clientUpdated = _serviceClient.UpdateClient(client);
+                return Ok(clientUpdated);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
     }
 }

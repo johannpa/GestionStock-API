@@ -41,7 +41,9 @@ namespace GestionStock.Service.Services
 
         public Client UpdateClient(Client client)
         {
-            throw new NotImplementedException();
+           var clientUpdated = _repository.Update(client);
+            _repository.SaveChanges();
+            return clientUpdated;
         }
     }
 }

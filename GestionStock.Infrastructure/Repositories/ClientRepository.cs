@@ -13,5 +13,15 @@ namespace GestionStock.Infrastructure.Repositories
         {
 
         }
+
+        public override Client Update(Client entity)
+        {
+            var client = base._context.Find<Client>(entity.Id);
+            client.Nom = entity.Nom;
+            client.Prenom = entity.Prenom;
+            client.Adresse = entity.Adresse;
+
+            return base.Update(client);
+        }
     }
 }
