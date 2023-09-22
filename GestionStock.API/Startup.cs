@@ -1,7 +1,9 @@
 using GestionStock.Domain.Interface;
 using GestionStock.Domain.Model;
+using GestionStock.Domain.Services;
 using GestionStock.Infrastructure;
 using GestionStock.Infrastructure.Repositories;
+using GestionStock.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,6 +51,11 @@ namespace GestionStock.API
             services.AddTransient<IRepository<Commande>, CommandeRepository>();
             services.AddTransient<IRepository<LignesCommande>, LignesCommandeRepository>();
 
+            // DI Service
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IProduitService, ProduitService>();
+            services.AddTransient<ICommandeService, CommandeService>();
+            services.AddTransient<ILignesCommandeService, LignesCommandeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
