@@ -56,6 +56,10 @@ namespace GestionStock.API
             services.AddTransient<IProduitService, ProduitService>();
             services.AddTransient<ICommandeService, CommandeService>();
             services.AddTransient<ILignesCommandeService, LignesCommandeService>();
+
+            // DI UnitOfWork
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

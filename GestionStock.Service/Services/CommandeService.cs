@@ -11,17 +11,11 @@ namespace GestionStock.Service.Services
 {
     public class CommandeService : ICommandeService
     {
-        private readonly IRepository<Commande> _repositoryCommande;
-        private readonly IRepository<Client> _repositoryClient;
-        private readonly IRepository<LignesCommande> _repositoryLigneCommande;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CommandeService(IRepository<Commande> repository, 
-            IRepository<Client> repositoryClient, 
-            IRepository<LignesCommande> repositoryLigneCommande)
+        public CommandeService(IUnitOfWork unitOfWork)
         {
-            _repositoryCommande = repository;
-            _repositoryClient = repositoryClient;
-            _repositoryLigneCommande = repositoryLigneCommande;
+            _unitOfWork = unitOfWork;
         }
         public Commande CreateCommande(Commande commande)
         {
@@ -31,21 +25,19 @@ namespace GestionStock.Service.Services
         public void CreateCommandeAvecClient(Client client, Commande commande, List<LignesCommande> listLigneCommande)
         {
             // Create the client
-            var clientCreated = _repositoryClient.Add(client);
-            _repositoryClient.SaveChanges();
+            var clientCreated = _unitOfWork.ClientRepository.Add(client);
+            commande.Client = clientCreated;
 
             // Create command
-            commande.Client = clientCreated;
-            var CommandeCreated = _repositoryCommande.Add(commande);
-            _repositoryCommande.SaveChanges();
+            var CommandeCreated = _unitOfWork.CommandeRepository.Add(commande);
 
             // Creat lignes of command
             foreach(var ligne in listLigneCommande)
             {
                 ligne.Commande = CommandeCreated;
-                _repositoryLigneCommande.Add(ligne);
-                _repositoryLigneCommande.SaveChanges();
+                _unitOfWork.LigneCommandeRepository.Add(ligne);
             }
+            _unitOfWork.SaveChanges();
         }
 
         public void DeleteCommande(Commande commande)

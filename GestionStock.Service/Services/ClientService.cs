@@ -11,16 +11,17 @@ namespace GestionStock.Service.Services
 {
     public class ClientService : IClientService
     {
-        private readonly IRepository<Client> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ClientService(IRepository<Client> repository)
+        public ClientService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public Client CreateClient(Client newClient)
         {
-            var client = _repository.Add(newClient);
-            _repository.SaveChanges();
+            
+            var client = _unitOfWork.ClientRepository.Add(newClient);
+            _unitOfWork.ClientRepository.SaveChanges();
             return client;
         }
 
@@ -31,18 +32,18 @@ namespace GestionStock.Service.Services
 
         public IEnumerable<Client> GetAllClients()
         {
-            return _repository.All();
+            return _unitOfWork.ClientRepository.All();
         }
 
         public Client GetClientById(int id)
         {
-            return _repository.Get(id);
+            return _unitOfWork.ClientRepository.Get(id);
         }
 
         public Client UpdateClient(Client client)
         {
-           var clientUpdated = _repository.Update(client);
-            _repository.SaveChanges();
+           var clientUpdated = _unitOfWork.ClientRepository.Update(client);
+            _unitOfWork.ClientRepository.SaveChanges();
             return clientUpdated;
         }
     }
